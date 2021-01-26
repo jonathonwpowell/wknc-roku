@@ -1,0 +1,154 @@
+<?xml version = "1.0" encoding = "utf-8" ?> 
+
+<!--********** Copyright 2016 Roku Corp.  All Rights Reserved. **********-->
+
+<component name = "AudioListExample" extends = "Scene" >
+
+  <script type = "text/brightscript" >
+    <![CDATA[
+
+    sub init()
+      m.top.backgroundColor = "0x000000FF"
+      m.top.backgroundURI = ""
+
+      m.audiolist = m.top.findNode("audioLabelList")
+      m.playingStateLabel = m.top.findNode("playingState")
+      m.playingStationLabel = m.top.findNode("playingStation")
+      m.songLabel = m.top.findNode("song")
+      m.artistLabel = m.top.findNode("artist")
+      m.currentSongUri = ""
+
+      m.audiolist.observeField("itemSelected", "setandplayaudio")
+
+      m.audio = createObject("RoSGNode", "Audio")
+
+      m.audio.observeField("state", "controlaudioplay")
+      m.audio.observeField("state", "setaudiostatelabel")
+
+      m.readAudioContentTask = createObject("RoSGNode", "ContentReader")
+      m.readAudioContentTask.observeField("content", "showaudiolist")
+      m.readAudioContentTask.contenturi = "https://gist.githubusercontent.com/jonathonwpowell/23e656ddc4a44bfed436fc44c80b1d52/raw"
+      m.readAudioContentTask.control = "RUN"
+
+      m.timer = m.top.findNode("whatsPlayingTimer")
+      m.timer.control = "start"
+      m.timer.ObserveField("fire","updatecurrentsong")
+    end sub
+
+    sub updatecurrentsong()
+      'print "update current song starting"
+      m.currentSongReader = createObject("RoSGNode", "CurrentSongReader")
+      m.currentSongReader.uri = m.currentSongUri
+      m.currentSongReader.songlabel = m.songLabel
+      m.currentSongReader.artistlabel = m.artistLabel
+      m.currentSongReader.control = "RUN"
+    end sub
+
+    sub showaudiolist()
+      m.audiolist.content = m.readAudioContentTask.content
+      m.audiolist.setFocus(true)
+    end sub
+
+    'sub setaudio()
+    '  audiocontent = m.audiolist.content.getChild(m.audiolist.itemFocused)
+    '  m.audio.content = audiocontent
+    'end sub
+
+    sub setandplayaudio()
+      audiocontent = m.audiolist.content.getChild(m.audiolist.itemSelected)
+      m.playingStationLabel.text = "Station: " + audiocontent.TITLE
+      print audiocontent.CURRENTSONGURL
+      m.currentSongUri = audiocontent.CURRENTSONGURL
+      m.audio.content = audiocontent
+      m.audio.control = "stop"
+      m.audio.control = "none"
+      m.audio.control = "play"
+      updatecurrentsong()
+    end sub
+
+    sub controlaudioplay()
+      if (m.audio.state = "finished") 
+        m.audio.control = "stop"
+        m.audio.control = "none"
+      end if
+    end sub
+
+    sub setaudiostatelabel()
+      m.playingStateLabel.text = m.audio.state
+    end sub
+
+    function onKeyEvent(key as String,press as Boolean) as Boolean
+      if press then
+        ' print "key is: " + key
+        if key = "back" OR key = "play"
+          if (m.audio.state = "playing")
+            m.audio.control = "stop"
+
+            return true
+          end if
+        end if
+      end if
+
+      return false
+    end function
+
+    ]]>
+  </script>
+
+  <children>
+
+    <Group >
+
+      <Label
+      id= "playingStation"
+      height= "100"
+      width= "600"
+      text= ""
+      translation = "[ 180, 450 ]" 
+      />
+
+      <Label
+      id= "song"
+      height= "100"
+      width= "600"
+      text= ""
+      translation = "[ 180, 300 ]" 
+      />
+
+      <Label
+      id= "artist"
+      height= "100"
+      width= "600"
+      text= ""
+      translation = "[ 180, 350 ]" 
+      />
+
+      <Label
+      id= "playingState"
+      height= "100"
+      width= "200"
+      text= ""
+      translation = "[ 180, 500 ]" 
+      />
+
+      <LabelList 
+        id = "audioLabelList" 
+        translation = "[ 180, 100 ]" 
+        itemSize = "[ 350, 60 ]" />
+
+      <!-- <Poster 
+        uri = "pkg:/images/audio_hd.jpg" 
+        translation = "[ 600, 100 ]" 
+        width = "494" 
+        height = "574" /> -->
+
+      <Timer
+        id="whatsPlayingTimer"
+        repeat="true"
+        duration="15"/>
+
+    </Group>
+
+  </children>
+
+</component>

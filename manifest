@@ -1,0 +1,20 @@
+'********** Copyright 2016 Roku Corp.  All Rights Reserved. **********
+
+title=WKNC Radio Stream
+subtitle=Listen to WKNC Live
+major_version=1
+minor_version=0
+build_version=00000
+
+# Home Screen Icons
+mm_icon_focus_hd=pkg:/images/Roku_WKNC_home_icon_hd.jpg
+mm_icon_focus_sd=pkg:/images/Roku_WKNC_home_icon_sd.jpg
+
+ # Splash Screen
+splash_screen_sd=pkg:/images/WKNC_Splash_SD.jpg
+splash_screen_hd=pkg:/images/WKNC_Splash_HD.jpg
+splash_screen_fhd=pkg:/images/WKNC_Splash_FHD.jpg
+splash_color=#000000
+splash_min_time=1000
+
+ui_resolutions = "hd"
