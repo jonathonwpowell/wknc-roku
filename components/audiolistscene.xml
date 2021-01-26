@@ -63,6 +63,8 @@
       m.audio.control = "stop"
       m.audio.control = "none"
       m.audio.control = "play"
+      m.songLabel.text = ""
+      m.artistLabel.text = ""
       updatecurrentsong()
     end sub
 
