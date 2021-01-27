@@ -29,8 +29,10 @@
       readInternet.InitClientCertificates()
       readInternet.setUrl(m.top.uri)
       response = parseJson(readInternet.GetToString())
-
-      m.top.songlabel.text = "Song: " + response.song + chr(10) + "Artist: " + response.artist
+      
+      if type(response) = "roAssociativeArray"
+        m.top.songlabel.text = "Song: " + response.song + chr(10) + "Artist: " + response.artist
+      end if
     end sub
 
     ]]>
