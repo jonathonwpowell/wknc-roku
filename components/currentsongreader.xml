@@ -7,7 +7,6 @@
   <interface>
     <field id = "uri" type = "uri" />
     <field id = "songlabel" type = "node" />
-    <field id = "artistlabel" type = "node" />
   </interface>
 
   <script type = "text/brightscript" >
@@ -31,8 +30,7 @@
       readInternet.setUrl(m.top.uri)
       response = parseJson(readInternet.GetToString())
 
-      m.top.songlabel.text = "Song: " + response.song
-      m.top.artistlabel.text = "Artist: " + response.artist
+      m.top.songlabel.text = "Song: " + response.song + chr(10) + "Artist: " + response.artist
     end sub
 
     ]]>

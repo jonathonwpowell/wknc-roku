@@ -15,7 +15,6 @@
       m.playingStateLabel = m.top.findNode("playingState")
       m.playingStationLabel = m.top.findNode("playingStation")
       m.songLabel = m.top.findNode("song")
-      m.artistLabel = m.top.findNode("artist")
       m.currentSongUri = ""
 
       m.audiolist.observeField("itemSelected", "setandplayaudio")
@@ -40,7 +39,7 @@
       m.currentSongReader = createObject("RoSGNode", "CurrentSongReader")
       m.currentSongReader.uri = m.currentSongUri
       m.currentSongReader.songlabel = m.songLabel
-      m.currentSongReader.artistlabel = m.artistLabel
+      'm.currentSongReader.artistlabel = m.artistLabel
       m.currentSongReader.control = "RUN"
     end sub
 
@@ -48,11 +47,6 @@
       m.audiolist.content = m.readAudioContentTask.content
       m.audiolist.setFocus(true)
     end sub
-
-    'sub setaudio()
-    '  audiocontent = m.audiolist.content.getChild(m.audiolist.itemFocused)
-    '  m.audio.content = audiocontent
-    'end sub
 
     sub setandplayaudio()
       audiocontent = m.audiolist.content.getChild(m.audiolist.itemSelected)
@@ -64,7 +58,6 @@
       m.audio.control = "none"
       m.audio.control = "play"
       m.songLabel.text = ""
-      m.artistLabel.text = ""
       updatecurrentsong()
     end sub
 
@@ -101,48 +94,56 @@
 
     <Group >
 
+
+      <LabelList 
+        id = "audioLabelList" 
+        translation = "[ 100, 240 ]" 
+        itemSize = "[ 450, 60 ]" />
+        
       <Label
-      id= "playingStation"
-      height= "100"
-      width= "600"
-      text= ""
-      translation = "[ 180, 450 ]" 
+        id= "playingState"
+        height= "40"
+        width= "200"
+        text= ""
+        translation = "[ 100, 570 ]"
+        font = "font:LargeBoldSystemFont" 
+      />
+
+      <Label
+        id= "playingStation"
+        height= "80"
+        width= "540"
+        text= ""
+        wrap= "true"
+        translation = "[ 100, 620 ]"
+        font = "font:LargeBoldSystemFont"  
       />
 
       <Label
       id= "song"
-      height= "100"
-      width= "600"
+      height= "250"
+      width= "550"
+      wrap= "true"
       text= ""
-      translation = "[ 180, 300 ]" 
+      translation = "[ 650, 250 ]"
+      font = "font:LargeSystemFont" 
       />
 
       <Label
-      id= "artist"
-      height= "100"
-      width= "600"
-      text= ""
-      translation = "[ 180, 350 ]" 
+      id= "wkncinfo"
+      height= "400"
+      width= "550"
+      wrap= "true"
+      text= "WKNC is student-run non-commercial radio from NC State University. Visit wknc.org for playlists, schedules, and more! Catch us over air at 88.1 around Raleigh, NC."
+      translation = "[ 650, 520 ]"
+      font = "font:MediumSystemFont" 
       />
 
-      <Label
-      id= "playingState"
-      height= "100"
-      width= "200"
-      text= ""
-      translation = "[ 180, 500 ]" 
-      />
-
-      <LabelList 
-        id = "audioLabelList" 
-        translation = "[ 180, 100 ]" 
-        itemSize = "[ 350, 60 ]" />
-
-      <!-- <Poster 
-        uri = "pkg:/images/audio_hd.jpg" 
-        translation = "[ 600, 100 ]" 
-        width = "494" 
-        height = "574" /> -->
+      <Poster 
+        uri = "pkg:/images/wknc_inline.png" 
+        translation = "[ 400, 20 ]" 
+        width = "480"
+        height = "144" />
 
       <Timer
         id="whatsPlayingTimer"
